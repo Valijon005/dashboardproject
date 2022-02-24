@@ -1,0 +1,63 @@
+{% extends "dashboardapp/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-8 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <img src="{% static 'images/logo.svg' %}" alt="logo">
+              </div>
+              <h4>New here?</h4>
+              <h6 class="font-weight-light">New Lesson registration panel</h6>
+              <form class="pt-3" action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="">Date</label>
+                  {% render_field form.data type="date" class="form-control form-control-lg" id="exampleInputEmail1" %}
+                </div>
+                <div class="form-group">
+                  <label for="">Time</label>
+                  {% render_field form.time type="dropdown" class="form-control form-control-lg" id="exampleFormControlSelect2" %}
+                </div>
+                <div class="form-group">
+                  <label for="">Room</label>
+                  {% render_field form.room type="dropdown" class="form-control form-control-lg" id="exampleFormControlSelect2" %}
+                </div>
+                <div class="form-group">
+                    <label for="">Course</label>
+                    {% render_field form.course type="dropdown" class="form-control form-control-lg" id="exampleFormControlSelect2" %}
+                  </div>
+                <div class="form-group">
+                  <label for="">Students qty</label>
+                  {% render_field form.student_qty type="number" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Student quantity"  %}
+                </div>
+                <div class="form-group">
+                  <label for="">Mentor</label>
+                  {% render_field form.mentor type="dropdown" class="form-control form-control-lg" id="exampleFormControlSelect2" %}
+                </div>
+                <div class="form-group">
+                  <label for="">Theme</label>
+                  {% render_field form.theme type="text" class="form-control form-control-lg" id="exampleInputUsername1" %}
+                </div>
+                <div class="form-group">
+                    <label for="">Status</label>
+                    {% render_field form.status type="dropdown" class="form-control form-control-lg" id="exampleFormControlSelect2" %}
+                  </div>
+                <div class="mt-3">
+                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">Registration</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+  {% endblock %}

@@ -1,0 +1,99 @@
+{% extends "dashboardapp/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title mb-0">Lessons</h2><br>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div>
+                    <select name="mentor_id" class="form-control form-control-lg" id="exampleFormControlSelect2">
+                        <option value="{{ mentor }}">All teachers</option>
+                        {% for mentor in mentors %}
+                        <option value="{{ mentor.id }}">{{ mentor }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+              </form>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <form action="" method="POST">
+                {% csrf_token %}
+                <div>
+                    <select name="course_id" class="form-control form-control-lg" id="exampleFormControlSelect2">
+                        <option value="{{ course }}">All courses</option>
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course }}</option>
+                        {% endfor %}
+                        
+                    </select>
+                </div>
+                <br>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+              </form>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped table-borderless">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Time</th>
+                  <th>Room</th>
+                  <th>Group</th>
+                  <th>Students</th>
+                  <th>Mentor</th>
+                  <th>Theme</th>
+                  <th>Status</th>
+                  
+                  {% if request.user.is_superuser or request.user.is_staff %}
+                  <th>Actions</th> 
+                  {% else %}
+                  {% endif %}
+
+                </tr>  
+              </thead>
+              <tbody>
+              {% for lesson in lessons %}
+                <tr>
+                  <td>{{ lesson.data }}</td>
+                  <td>{{ lesson.time }}</td>
+                  <td>{{ lesson.room }} </td>
+                  <td class="font-weight-bold">{{ lesson.course }}</td>
+                  <td>{{ lesson.student_qty }}</td>
+                  <td class="font-weight-bold">{{ lesson.mentor }}</td>
+                  <td>{{ lesson.theme }}</td>
+                  {% if lesson.status == "CANCEL" %}
+                    <td class="font-weight-medium"><div class="badge badge-danger">{{ lesson.status }}</div></td>
+                  {% elif lesson.status == "PLANNED"  %}
+                      <td class="font-weight-medium"><div class="badge badge-warning">{{ lesson.status }}</div></td>
+                  {% else %}
+                      <td class="font-weight-medium"><div class="badge badge-success">{{ lesson.status }}</div></td>
+                  {% endif %}
+                  {% if request.user.is_superuser or request.user.is_staff %}
+                  <td>
+                      <a href="{% url 'lesson' lesson.id %}" ><i class="fas fa-pencil-alt"></i></a>
+                      <a href="{% url 'delete_lesson' lesson.id %}"><i class="fas fa-trash"></i></a>
+                  
+                  </td>
+                  {% else %}
+                   {% endif %}
+                </tr> 
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
